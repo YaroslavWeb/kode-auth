@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useStore } from "effector-react";
 import { Link, useHistory } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 
 import {
   Header,
@@ -73,7 +74,9 @@ export function SignUpPage() {
         />
         <Divider height={14} />
       </TopSection>
-      {loader.isLoading && <Loader type={loader.type} />}
+      <AnimatePresence>
+        {loader.isLoading && <Loader type={loader.type} />}
+      </AnimatePresence>
       <BottomSection>
         <Divider height={14} />
         <InputCheckbox

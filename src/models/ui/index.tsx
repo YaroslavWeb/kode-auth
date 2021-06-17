@@ -41,13 +41,15 @@ export const $ui = createStore<IUi>({
     state.loader.isLoading = false;
   })
   .on(signUpFx.doneData, (state: IUi, data: any) => {
-    console.log(data);
     state.loader.type = data.status;
     state.snackbar = {
       ...state.snackbar,
       isOpen: true,
       type: data.status,
-      message: "Не удалось создать аккаунт",
+      message:
+        data.status === "error"
+          ? "Не удалось создать аккаунт"
+          : "Аккаунт создан, выполняем вход в личный кабинет",
     };
     return { ...state };
   });
