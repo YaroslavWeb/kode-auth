@@ -1,4 +1,4 @@
-# Kode auth - Kode Utair (test-task)
+# React Auth - Kode Utair (test-task)
 
 ## Stack
 

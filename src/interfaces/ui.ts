@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 export interface IUi {
+  isAuth: boolean;
   snackbar: ISnackbar;
   loader: ILoader;
 }
@@ -16,7 +17,10 @@ export interface ISnackbarProps {
   icon: ReactNode;
 }
 
-export interface ILoader {
+export interface ILoader extends ILoaderProps {
   isLoading: boolean;
+}
+
+export interface ILoaderProps {
   type: "pending" | "error" | "success";
 }

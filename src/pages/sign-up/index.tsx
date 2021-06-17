@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useFormik } from "formik";
 import { useStore } from "effector-react";
 import { Link, useHistory } from "react-router-dom";
@@ -20,9 +20,8 @@ import { ArrowBackIcon, Divider, ProfileIcon } from "styles/components";
 import { getFormatedClientPhone } from "utils/formatPhone";
 
 export function SignUpPage() {
-  const { snackbar } = useStore($ui);
+  const { snackbar, loader } = useStore($ui);
   const history = useHistory();
-  const [isLoading, setLoading] = useState(false);
 
   const formikReg = useFormik({
     initialValues: initialValuesReg,
@@ -65,6 +64,7 @@ export function SignUpPage() {
           placeholder="Номер телефона"
           onBlur={onBlurInputPhone}
           info="Укажите ваш номер телефона. Он будет использоваться для входа в приложение"
+          disabled={loader.isLoading}
           error={
             formikReg.errors.phone && formikReg.touched.phone
               ? formikReg.errors.phone
@@ -73,13 +73,14 @@ export function SignUpPage() {
         />
         <Divider height={14} />
       </TopSection>
-      {isLoading && <Loader type={"success"} />}
+      {loader.isLoading && <Loader type={loader.type} />}
       <BottomSection>
         <Divider height={14} />
         <InputCheckbox
           {...formikReg.getFieldProps("checkbox")}
           name="checkbox"
           text={<InputCheckboxText />}
+          disabled={loader.isLoading}
           error={
             formikReg.errors.checkbox && formikReg.touched.checkbox
               ? formikReg.errors.checkbox
@@ -87,7 +88,11 @@ export function SignUpPage() {
           }
         />
         <Divider height={16} />
-        <Button fullWidth onClick={formikReg.submitForm}>
+        <Button
+          disabled={loader.isLoading}
+          fullWidth
+          onClick={formikReg.submitForm}
+        >
           Продолжить
         </Button>
         <Divider height={16} />

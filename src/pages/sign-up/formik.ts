@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { getPhoneRE } from "utils/regExp";
-import { signUpFx } from "models/ui";
+import { signUpFx, startSignUp, completeSignUp } from "models/ui";
 import { getFormatedServerPhone } from "utils/formatPhone";
 
 interface IRegFormik {
@@ -9,9 +9,11 @@ interface IRegFormik {
 }
 
 export const initialValuesReg: IRegFormik = { phone: "", checkbox: false };
-export const onSumbmitReg = (values: IRegFormik) => {
+export const onSumbmitReg = async (values: IRegFormik) => {
   const formatedPhone = getFormatedServerPhone(values.phone);
-  signUpFx(formatedPhone);
+  startSignUp();
+  await signUpFx(formatedPhone);
+  setTimeout(() => completeSignUp(), 3000);
 };
 
 export const validationSchemaReg = Yup.object({

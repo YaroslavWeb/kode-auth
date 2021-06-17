@@ -1,3 +1,4 @@
+import { ILoaderProps } from "interfaces/ui";
 import { StyledLoader, Path, PathLoader } from "./styles";
 import {
   loaderVariants,
@@ -6,12 +7,7 @@ import {
   statusVariantsThird,
 } from "./variants";
 
-interface LoaderProps {
-  type?: "pending" | "error" | "success";
-}
-
-export function Loader({ type }: LoaderProps) {
-  console.log(type);
+export function Loader({ type }: ILoaderProps) {
   return (
     <StyledLoader initial={"pending"} animate={type} variants={loaderVariants}>
       <svg width="24" height="24" viewBox="0 0 24 24">

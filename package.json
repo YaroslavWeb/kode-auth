@@ -1,5 +1,6 @@
 {
   "name": "kode-auth",
+  "proxy": "https://www.utair.ru/mobile/api/v8",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

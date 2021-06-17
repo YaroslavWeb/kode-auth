@@ -1,9 +1,9 @@
-export const GetSessionToken = async () => {
-  const url = "https://www.utair.ru/mobile/api/v8/sessions/guest";
+import { ISessionStorage } from "interfaces/auth";
 
-  const req = await fetch(url, {
+export const GetSessionToken = async () => {
+  const path = "/sessions/guest";
+  const req = await fetch(path, {
     method: "POST",
-    mode: "no-cors",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -20,25 +20,38 @@ export const GetSessionToken = async () => {
     }),
   });
   const res = await req.json();
-  localStorage.setItem("session_token", res);
+  localStorage.setItem("session_token", JSON.stringify(res));
+
+  return res;
 };
 
 export const signUp = async (login: string): Promise<any> => {
-  if (!localStorage.getItem("session_token")) {
+  if (localStorage.getItem("session_token")) {
     await GetSessionToken();
   }
 
-  const url = "https://www.utair.ru/mobile/api/v8/account/profile";
-  const req = await fetch(url, {
+  let session: ISessionStorage = JSON.parse(
+    localStorage.getItem("session_token")!
+  );
+
+  const path = "/account/profile";
+  const req = await fetch(path, {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      Authorization: "Token " + session.token,
     },
     body: JSON.stringify({
       login,
       confirmationGDPRDate: new Date().getTime(),
     }),
   });
-  return req.json();
+
+  console.log("Задержись, посмотрись", req);
+  if (req.status !== 200) {
+    return { status: "error", data: await req.json() };
+  } else {
+    return { status: "success", data: await req.json() };
+  }
 };
