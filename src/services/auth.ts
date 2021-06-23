@@ -20,13 +20,14 @@ export const GetSessionToken = async () => {
     }),
   });
   const res = await req.json();
+  console.log(res);
   localStorage.setItem("session_token", JSON.stringify(res));
 
   return res;
 };
 
 export const signUp = async (login: string): Promise<any> => {
-  if (localStorage.getItem("session_token")) {
+  if (!localStorage.getItem("session_token")) {
     await GetSessionToken();
   }
 
