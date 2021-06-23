@@ -13,7 +13,9 @@ export const onSumbmitReg = async (values: IRegFormik) => {
   const formatedPhone = getFormatedServerPhone(values.phone);
   startSignUp();
   await signUpFx(formatedPhone);
-  setTimeout(() => completeSignUp(), 3000);
+  setTimeout(() => {
+    completeSignUp();
+  }, 3000);
 };
 
 export const validationSchemaReg = Yup.object({

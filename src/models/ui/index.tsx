@@ -39,6 +39,7 @@ export const $ui = createStore<IUi>({
   })
   .on(completeSignUp, (state: IUi) => {
     state.loader.isLoading = false;
+    return { ...state };
   })
   .on(signUpFx.doneData, (state: IUi, data: any) => {
     state.loader.type = data.status;
